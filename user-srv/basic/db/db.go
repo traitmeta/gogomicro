@@ -3,7 +3,8 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"github.com/go-log/log"
+	"github.com/micro/go-micro/util/log"
+
 	"github.com/songxuexian/gogomicro/user-srv/basic/config"
 	"sync"
 )
@@ -19,12 +20,12 @@ func Init() {
 	defer m.Unlock()
 
 	var err error
+
 	if inited {
 		err = fmt.Errorf("[Init] db has been inited")
 		log.Logf(err.Error())
 		return
 	}
-
 	if config.GetMysqlConfig().GetEnabled() {
 		initMysql()
 	}

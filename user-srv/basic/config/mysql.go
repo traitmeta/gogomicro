@@ -9,21 +9,17 @@ type MysqlConfig interface {
 
 type defaultMysqlConfig struct {
 	URL               string `json:"url"`
-	Enable            bool   `json:"enable"`
+	Enabled            bool   `json:"enabled"`
 	MaxIdleConnection int    `json:"maxIdleConnection"`
 	MaxOpenConnection int    `json:"maxOpenConnection"`
 }
 
 func (m defaultMysqlConfig) GetEnabled() bool {
-	panic("implement me")
+	return m.Enabled
 }
 
 func (m defaultMysqlConfig) GetURL() string {
 	return m.URL
-}
-
-func (m defaultMysqlConfig) GetEnable() bool {
-	return m.Enable
 }
 
 func (m defaultMysqlConfig) GetMaxIdleConnection() int {
