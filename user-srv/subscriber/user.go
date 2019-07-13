@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/micro/go-micro/util/log"
 
-	user "./user-srv/proto/user"
+	user "github.com/songxuexian/gogomicro/user-srv/proto/user"
 )
 
 type User struct{}

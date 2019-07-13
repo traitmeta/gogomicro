@@ -3,7 +3,8 @@ syntax = "proto3";
 package sxx.micro.book.srv.user;
 
 service User {
-	rpc QueryUserByName(Request) returns (Response) {}
+    rpc QueryUserByName (Request) returns (Response) {
+    }
 }
 
 message user {
@@ -11,29 +12,23 @@ message user {
     string name = 2;
     string pwd = 3;
     uint64 createdTime = 4;
-	uint64 updatedTime = 5;
+    uint64 updatedTime = 5;
 }
 
-message Request {
-	string name = 1;
+message Error {
+    int32 code = 1;
+    string detail = 2;
 }
 
 message Response {
-	string msg = 1;
+    bool success = 1;
+    Error error = 2;
+    user user = 3;
 }
 
-message StreamingRequest {
-	int64 count = 1;
+message Request {
+    string userID = 1;
+    string userName = 2;
+    string userPwd = 3;
 }
 
-message StreamingResponse {
-	int64 count = 1;
-}
-
-message Ping {
-	int64 stroke = 1;
-}
-
-message Pong {
-	int64 stroke = 1;
-}
