@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package sxx.micro.book.srv.user;
+
+service User {
+	rpc QueryUserByName(Request) returns (Response) {}
+}
+
+message user {
+    int64 id = 1;
+    string name = 2;
+    string pwd = 3;
+    uint64 createdTime = 4;
+	uint64 updatedTime = 5;
+}
+
+message Request {
+	string name = 1;
+}
+
+message Response {
+	string msg = 1;
+}
+
+message StreamingRequest {
+	int64 count = 1;
+}
+
+message StreamingResponse {
+	int64 count = 1;
+}
+
+message Ping {
+	int64 stroke = 1;
+}
+
+message Pong {
+	int64 stroke = 1;
+}
