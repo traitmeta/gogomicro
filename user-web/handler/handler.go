@@ -3,38 +3,65 @@ package handler
 import (
 	"context"
 	"encoding/json"
+	"github.com/micro/go-micro/client"
+	"github.com/micro/go-micro/util/log"
+	us "github.com/songxuexian/gogomicro/user-srv/proto/user"
 	"net/http"
 	"time"
-
-	"github.com/micro/go-micro/client"
-	user "path/to/service/proto/user"
 )
 
-func UserCall(w http.ResponseWriter, r *http.Request) {
-	// decode the incoming request as json
-	var request map[string]interface{}
-	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-		http.Error(w, err.Error(), 500)
+var serviceClient us.UserService
+
+type Error struct {
+	Code   int    `json:"code"`
+	Detail string `json:"detail"`
+}
+
+func Init() {
+	serviceClient = us.NewUserService("sxx.micro.book.srv.user", client.DefaultClient)
+}
+
+func Login(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		log.Logf("非法请求")
+		http.Error(w, "非法请求", 400)
 		return
 	}
 
-	// call the backend service
-	userClient := user.NewUserService("sxx.micro.book.srv.user", client.DefaultClient)
-	rsp, err := userClient.Call(context.TODO(), &user.Request{
-		Name: request["name"].(string),
+	err := r.ParseForm()
+	if err != nil {
+		log.Logf("参数解析错误")
+		http.Error(w, "参数解析错误", 400)
+		return
+	}
+	resp, err := serviceClient.QueryUserByName(context.TODO(), &us.Request{
+		UserName: r.Form.Get("userName"),
 	})
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
 
-	// we want to augment the response
 	response := map[string]interface{}{
-		"msg": rsp.Msg,
 		"ref": time.Now().UnixNano(),
 	}
+	if resp.User.Pwd == r.Form.Get("pwd") {
+		response["success"] = resp.Success
 
-	// encode and write the response as json
+		// 干掉密码返回
+		resp.User.Pwd = ""
+		response["data"] = resp.User
+
+	} else {
+		response["success"] = false
+		response["error"] = &Error{
+			Detail: "密码错误",
+		}
+	}
+
+	w.Header().Add("Content-Type", "application/json; charset=utf-8")
+
+	// 返回JSON结构
 	if err := json.NewEncoder(w).Encode(response); err != nil {
 		http.Error(w, err.Error(), 500)
 		return
