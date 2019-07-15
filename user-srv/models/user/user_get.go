@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/micro/go-micro/util/log"
-	"github.com/songxuexian/gogomicro/user-srv/basic/db"
+	"github.com/songxuexian/gogomicro/basic/db"
 	proto "github.com/songxuexian/gogomicro/user-srv/proto/user"
 )
 
@@ -20,7 +20,7 @@ func (s *service) QueryUserByName(userName string) (ret *proto.User, err error) 
 
 	// 查询
 	queryRow := mysqlDB.QueryRow(queryString, userName)
-	if queryRow ==nil{
+	if queryRow == nil {
 		log.Logf("[QueryUserByName] 查询数据失败，err：%s", err)
 		return
 	}

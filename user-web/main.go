@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/gogomicro/basic"
-	"github.com/gogomicro/basic/config"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-micro/registry/consul"
 	"github.com/micro/go-micro/util/log"
+	"github.com/songxuexian/gogomicro/basic"
+	"github.com/songxuexian/gogomicro/basic/config"
 	"net/http"
 	"time"
 
