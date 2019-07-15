@@ -1,11 +1,11 @@
 package basic
 
 import (
-	"github.com/songxuexian/gogomicro/user-srv/basic/config"
-	"github.com/songxuexian/gogomicro/user-srv/basic/db"
+	"github.com/songxuexian/gogomicro/basic/config"
+	"github.com/songxuexian/gogomicro/basic/db"
 )
 
-func Init(){
+func Init() {
 	config.Init()
 	db.Init()
 }

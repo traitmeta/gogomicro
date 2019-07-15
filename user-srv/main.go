@@ -7,8 +7,9 @@ import (
 	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-micro/registry/consul"
 	"github.com/micro/go-micro/util/log"
-	"github.com/songxuexian/gogomicro/user-srv/basic"
-	"github.com/songxuexian/gogomicro/user-srv/basic/config"
+	"github.com/songxuexian/gogomicro/basic"
+	"github.com/songxuexian/gogomicro/basic/config"
+
 	"github.com/songxuexian/gogomicro/user-srv/handler"
 	"github.com/songxuexian/gogomicro/user-srv/models"
 	user "github.com/songxuexian/gogomicro/user-srv/proto/user"

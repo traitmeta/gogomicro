@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/gogomicro/user-web/basic"
-	"github.com/gogomicro/user-web/basic/config"
+	"github.com/gogomicro/basic"
+	"github.com/gogomicro/basic/config"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-micro/registry/consul"
