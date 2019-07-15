@@ -1,10 +1,10 @@
 package config
 
 import (
-	"github.com/go-log/log"
 	"github.com/micro/go-micro/config"
 	"github.com/micro/go-micro/config/source"
 	"github.com/micro/go-micro/config/source/file"
+	"github.com/micro/go-micro/util/log"
 	"os"
 	"path/filepath"
 	"strings"
