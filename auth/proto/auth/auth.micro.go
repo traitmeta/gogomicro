@@ -31,33 +31,33 @@ var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Client API for Service service
+// Client API for Auth service
 
-type Service interface {
+type AuthService interface {
 	MakeAccessToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	DelUserAccessToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 }
 
-type service struct {
+type authService struct {
 	c    client.Client
 	name string
 }
 
-func NewService(name string, c client.Client) Service {
+func NewAuthService(name string, c client.Client) AuthService {
 	if c == nil {
 		c = client.NewClient()
 	}
 	if len(name) == 0 {
 		name = "sxx.micro.book.srv.auth"
 	}
-	return &service{
+	return &authService{
 		c:    c,
 		name: name,
 	}
 }
 
-func (c *service) MakeAccessToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Service.MakeAccessToken", in)
+func (c *authService) MakeAccessToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Auth.MakeAccessToken", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -66,8 +66,8 @@ func (c *service) MakeAccessToken(ctx context.Context, in *Request, opts ...clie
 	return out, nil
 }
 
-func (c *service) DelUserAccessToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Service.DelUserAccessToken", in)
+func (c *authService) DelUserAccessToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Auth.DelUserAccessToken", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -76,33 +76,33 @@ func (c *service) DelUserAccessToken(ctx context.Context, in *Request, opts ...c
 	return out, nil
 }
 
-// Server API for Service service
+// Server API for Auth service
 
-type ServiceHandler interface {
+type AuthHandler interface {
 	MakeAccessToken(context.Context, *Request, *Response) error
 	DelUserAccessToken(context.Context, *Request, *Response) error
 }
 
-func RegisterServiceHandler(s server.Server, hdlr ServiceHandler, opts ...server.HandlerOption) error {
-	type service interface {
+func RegisterAuthHandler(s server.Server, hdlr AuthHandler, opts ...server.HandlerOption) error {
+	type auth interface {
 		MakeAccessToken(ctx context.Context, in *Request, out *Response) error
 		DelUserAccessToken(ctx context.Context, in *Request, out *Response) error
 	}
-	type Service struct {
-		service
+	type Auth struct {
+		auth
 	}
-	h := &serviceHandler{hdlr}
-	return s.Handle(s.NewHandler(&Service{h}, opts...))
+	h := &authHandler{hdlr}
+	return s.Handle(s.NewHandler(&Auth{h}, opts...))
 }
 
-type serviceHandler struct {
-	ServiceHandler
+type authHandler struct {
+	AuthHandler
 }
 
-func (h *serviceHandler) MakeAccessToken(ctx context.Context, in *Request, out *Response) error {
-	return h.ServiceHandler.MakeAccessToken(ctx, in, out)
+func (h *authHandler) MakeAccessToken(ctx context.Context, in *Request, out *Response) error {
+	return h.AuthHandler.MakeAccessToken(ctx, in, out)
 }
 
-func (h *serviceHandler) DelUserAccessToken(ctx context.Context, in *Request, out *Response) error {
-	return h.ServiceHandler.DelUserAccessToken(ctx, in, out)
+func (h *authHandler) DelUserAccessToken(ctx context.Context, in *Request, out *Response) error {
+	return h.AuthHandler.DelUserAccessToken(ctx, in, out)
 }

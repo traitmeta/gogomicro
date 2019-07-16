@@ -3,6 +3,7 @@ package access
 import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/songxuexian/gogomicro/basic/config"
 	"time"
 )
 

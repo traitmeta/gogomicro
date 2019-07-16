@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/micro/go-micro/util/log"
 
-	auth "github.com/gogomicro/auth/proto/auth"
+	auth "github.com/songxuexian/gogomicro/auth/proto/auth"
 )
 
 type Auth struct{}
