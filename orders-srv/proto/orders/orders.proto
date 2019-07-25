@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package sxx.micro.book.srv.order;
+package sxx.micro.book.srv.orders;
 
 service Orders {
     rpc New (Request) returns (Response) {
