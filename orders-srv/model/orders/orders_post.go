@@ -3,6 +3,7 @@ package orders
 import (
 	"context"
 	"github.com/micro/go-micro/util/log"
+	"github.com/songxuexian/gogomicro/basic/common"
 	"github.com/songxuexian/gogomicro/basic/db"
 )
 

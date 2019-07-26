@@ -3,18 +3,23 @@ package subscriber
 import (
 	"context"
 	"github.com/micro/go-micro/util/log"
-
-	order "github.com/songxuexian/gogomicro/orders-srv/proto/order"
+	"github.com/songxuexian/gogomicro/orders-srv/model/orders"
 )
 
-type Order struct{}
+var (
+	ordersService orders.Service
+)
 
-func (e *Order) Handle(ctx context.Context, msg *order.Message) error {
-	log.Log("Handler Received message: ", msg.Say)
-	return nil
+func Init() {
+	ordersService, _ = orders.GetService()
 }
 
-func Handler(ctx context.Context, msg *order.Message) error {
-	log.Log("Function Received message: ", msg.Say)
-	return nil
+func PayOrder(ctx context.Context, event *payS.PayEvent) (err error) {
+	log.Logf("[PayOrder] Received pay message: %d, %d", event.OrderId, event.State)
+	err = ordersService.UpdateOrderState(event.OrderId, int(event.State))
+	if err != nil {
+		log.Logf("[PayOrder] Received pay message,update state fail, %s", err)
+		return
+	}
+	return
 }

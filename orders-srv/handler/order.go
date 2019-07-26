@@ -2,47 +2,49 @@ package handler
 
 import (
 	"context"
+	"github.com/songxuexian/gogomicro/orders-srv/model/orders"
 
 	"github.com/micro/go-micro/util/log"
 
-	order "github.com/songxuexian/gogomicro/orders-srv/proto/order"
+	proto "github.com/songxuexian/gogomicro/orders-srv/proto/orders"
 )
 
-type Order struct{}
+var (
+	ordersService orders.Service
+)
 
-// Call is a single request handler called via client.Call or the generated client code
-func (e *Order) Call(ctx context.Context, req *order.Request, rsp *order.Response) error {
-	log.Log("Received Order.Call request")
-	rsp.Msg = "Hello " + req.Name
-	return nil
+type Orders struct{}
+
+func Init() {
+	ordersService, _ = orders.GetService()
 }
 
-// Stream is a server side stream handler called via client.Stream or the generated client code
-func (e *Order) Stream(ctx context.Context, req *order.StreamingRequest, stream order.Order_StreamStream) error {
-	log.Logf("Received Order.Stream request with count: %d", req.Count)
-
-	for i := 0; i < int(req.Count); i++ {
-		log.Logf("Responding: %d", i)
-		if err := stream.Send(&order.StreamingResponse{
-			Count: int64(i),
-		}); err != nil {
-			return err
+func (e *Orders) New(ctx context.Context, req *proto.Request, rsp *proto.Response) (err error) {
+	orderId, err := ordersService.New(req.BookId, req.UserId)
+	if err != nil {
+		rsp.Success = false
+		rsp.Error = &proto.Error{
+			Detail: err.Error(),
 		}
+		return
+	}
+	rsp.Order = &proto.Order{
+		Id: orderId,
 	}
 
-	return nil
+	return
 }
 
-// PingPong is a bidirectional stream handler called via client.Stream or the generated client code
-func (e *Order) PingPong(ctx context.Context, stream order.Order_PingPongStream) error {
-	for {
-		req, err := stream.Recv()
-		if err != nil {
-			return err
+func (e *Orders) GetOrder(ctx context.Context, req *proto.Request, rsp *proto.Response) (err error) {
+	log.Log("[GetOrder] Received get order request, %d", req.OrderId)
+	rsp.Order, err = ordersService.GetOrder(req.OrderId)
+	if err != nil {
+		rsp.Success = false
+		rsp.Error = &proto.Error{
+			Detail: err.Error(),
 		}
-		log.Logf("Got ping %v", req.Stroke)
-		if err := stream.Send(&order.Pong{Stroke: req.Stroke}); err != nil {
-			return err
-		}
+		return
 	}
+	rsp.Success = true
+	return
 }
