@@ -55,6 +55,7 @@ github.com/go-logfmt/logfmt v0.4.0/go.mod h1:3RMwSq7FuexP4Kalkev3ejPJsZTpXXBr9+V
 github.com/go-playground/locales v0.12.1/go.mod h1:IUMDtCfWo/w/mtMfIE/IG2K+Ey3ygWanZIBtBW0W2TM=
 github.com/go-playground/universal-translator v0.16.0/go.mod h1:1AnU7NaIRDWWzGEKwgtJRd2xk99HeFyHw3yid4rvQIY=
 github.com/go-redis/redis v6.15.3+incompatible/go.mod h1:W2YCLaZryXHirdd9QqwkiVUxCQsrx8SbLq9Uqk7JS7A=
+github.com/go-sql-driver/mysql v1.4.1/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
 github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
 github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.2.1/go.mod h1:hp+jE20tsWTFYpLwKvXlhS1hjn+gTNwPg2I6zVXpSg4=
@@ -246,6 +247,11 @@ github.com/sirupsen/logrus v1.3.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPx
 github.com/sirupsen/logrus v1.4.2/go.mod h1:tLMulIdttU9McNUspp0xgXVQah82FyeX6MwdIuYE2rE=
 github.com/songxuexian/gogomicro v0.0.0-20190725110221-147892e624bc h1:jQest1OKuy0fU1x3QOP9cuv9FUwrz1Qw2Z5i0vmQYHk=
 github.com/songxuexian/gogomicro v0.0.0-20190725110221-147892e624bc/go.mod h1:bnrGCzYhqPmQMfB8SzZRMG9sAOB9onVqUyQw9jpUzKw=
+github.com/songxuexian/gogomicro v0.0.0-20190725114343-8d1d88deeadd/go.mod h1:bnrGCzYhqPmQMfB8SzZRMG9sAOB9onVqUyQw9jpUzKw=
+github.com/songxuexian/gogomicro v0.0.0-20190726091830-847bd324d80b h1:8gAV1DYRK/oSQvLyAJN6ELdGmIwqNHgPvaG4LJd+98I=
+github.com/songxuexian/gogomicro v0.0.0-20190726091830-847bd324d80b/go.mod h1:bnrGCzYhqPmQMfB8SzZRMG9sAOB9onVqUyQw9jpUzKw=
+github.com/songxuexian/gogomicro/inventory-srv v0.0.0-20190726091830-847bd324d80b h1:1G51nMwjlWSmZVA7hpp4lzRIQF3LUBzmfkkC137i/Hg=
+github.com/songxuexian/gogomicro/inventory-srv v0.0.0-20190726091830-847bd324d80b/go.mod h1:EBTZSx/dJoolhNK1akfinHllPLsVeZX4StveOfWu0zg=
 github.com/songxuexian/gogomicro/orders-srv v0.0.0-20190725114343-8d1d88deeadd h1:ZtJ6+M1kehfXqFcqrBv6AYgs9qYgfieb1r1rzJJbyYE=
 github.com/songxuexian/gogomicro/orders-srv v0.0.0-20190725114343-8d1d88deeadd/go.mod h1:LK78Rx2Zw0FkVK0lO12llEUvotyFvNoMFF1/UndzCeg=
 github.com/src-d/gcfg v1.4.0/go.mod h1:p/UMsR43ujA89BJY9duynAwIpvqEujIH/jFlfL7jWoI=
