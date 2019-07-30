@@ -36,6 +36,7 @@ var _ server.Option
 type AuthService interface {
 	MakeAccessToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	DelUserAccessToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	GetCachedAccessToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 }
 
 type authService struct {
@@ -76,17 +77,29 @@ func (c *authService) DelUserAccessToken(ctx context.Context, in *Request, opts 
 	return out, nil
 }
 
+func (c *authService) GetCachedAccessToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Auth.GetCachedAccessToken", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Auth service
 
 type AuthHandler interface {
 	MakeAccessToken(context.Context, *Request, *Response) error
 	DelUserAccessToken(context.Context, *Request, *Response) error
+	GetCachedAccessToken(context.Context, *Request, *Response) error
 }
 
 func RegisterAuthHandler(s server.Server, hdlr AuthHandler, opts ...server.HandlerOption) error {
 	type auth interface {
 		MakeAccessToken(ctx context.Context, in *Request, out *Response) error
 		DelUserAccessToken(ctx context.Context, in *Request, out *Response) error
+		GetCachedAccessToken(ctx context.Context, in *Request, out *Response) error
 	}
 	type Auth struct {
 		auth
@@ -105,4 +118,8 @@ func (h *authHandler) MakeAccessToken(ctx context.Context, in *Request, out *Res
 
 func (h *authHandler) DelUserAccessToken(ctx context.Context, in *Request, out *Response) error {
 	return h.AuthHandler.DelUserAccessToken(ctx, in, out)
+}
+
+func (h *authHandler) GetCachedAccessToken(ctx context.Context, in *Request, out *Response) error {
+	return h.AuthHandler.GetCachedAccessToken(ctx, in, out)
 }
